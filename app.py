@@ -21,5 +21,5 @@ def get_data():
 df = get_data()
 
 st.write("### BTCUSDT 1H Chart")
-st.line_chart(df[['Close', 'EMA_9']])
-st.metric(label="Current RSI", value=round(df['RSI_14'].iloc[-1], 2))
+st.line_chart(df[['Close']])
+
