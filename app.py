@@ -1,0 +1,25 @@
+
+import streamlit as st
+import pandas as pd
+import pandas_ta as ta
+import requests
+
+st.set_page_config(page_title="Crypto Analysis", layout="wide")
+st.title("📈 Crypto Analysis Dashboard")
+
+@st.cache_data
+def get_data():
+    url = "https://data-api.binance.vision/api/v3/klines?symbol=BTCUSDT&interval=1h&limit=100"
+    response = requests.get(url)
+    data = response.json()
+    df = pd.DataFrame(data, columns=['Time', 'Open', 'High', 'Low', 'Close', 'Volume', 'CloseTime', 'QAV', 'NAT', 'TBBAV', 'TBQAV', 'Ignore'])
+    df['Close'] = pd.to_numeric(df['Close'])
+    df.ta.rsi(length=14, append=True)
+    df.ta.ema(length=9, append=True)
+    return df
+
+df = get_data()
+
+st.write("### BTCUSDT 1H Chart")
+st.line_chart(df[['Close', 'EMA_9']])
+st.metric(label="Current RSI", value=round(df['RSI_14'].iloc[-1], 2))
