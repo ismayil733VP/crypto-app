@@ -1,7 +1,7 @@
 
 import streamlit as st
 import pandas as pd
-import pandas_ta as ta
+
 import requests
 
 st.set_page_config(page_title="Crypto Analysis", layout="wide")
@@ -14,8 +14,8 @@ def get_data():
     data = response.json()
     df = pd.DataFrame(data, columns=['Time', 'Open', 'High', 'Low', 'Close', 'Volume', 'CloseTime', 'QAV', 'NAT', 'TBBAV', 'TBQAV', 'Ignore'])
     df['Close'] = pd.to_numeric(df['Close'])
-    df.ta.rsi(length=14, append=True)
-    df.ta.ema(length=9, append=True)
+    
+    
     return df
 
 df = get_data()
