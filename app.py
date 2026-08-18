@@ -1,6 +1,6 @@
 
 import streamlit as st
-import pandas as pd
+import pandas as d
 
 import requests
 
